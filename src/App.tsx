@@ -5,7 +5,7 @@ import audiQ6Venstre from "@/assets/images/Q6_VENSTRE.avif";
 import CarImage from "@/components/ui/carimage";
 import SpecRow from "@/components/ui/specrow";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Gauge, BatteryCharging, Zap } from "lucide-react";
+import { Settings, Gauge, BatteryCharging, Zap, Check } from "lucide-react";
 
 function App() {
   return (
@@ -25,7 +25,9 @@ function App() {
                 Cupra Tavascan AWD
                 <div className="mx-auto mt-3 h-1 w-28 rounded bg-yellow-400" />
               </CardTitle>
-              <Badge>Valgt</Badge>
+              <Badge variant="secondary">
+                <Check></Check>Valgt
+              </Badge>
               <CarImage src={tavaScanHoyre} alt="Cupra Tavascan" />
             </CardHeader>
             <CardContent className="pt-6">
@@ -62,7 +64,9 @@ function App() {
                 Audi Q6 Etron AWD
                 <div className="mx-auto mt-3 h-1 w-28 rounded bg-yellow-400" />
               </CardTitle>
-              <Badge variant="secondary">Tilgjengelig alternativ</Badge>
+              <Badge variant="secondary" className="bg-slate-600 text-white">
+                Tilgjengelig alternativ
+              </Badge>{" "}
               <CarImage
                 src={audiQ6Venstre}
                 alt="Audi Q6 Etron"
