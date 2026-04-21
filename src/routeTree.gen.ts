@@ -8,52 +8,52 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as DisplaySlugRouteImport } from './routes/display/$slug'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as DisplaySlugRouteImport } from "./routes/display/$slug";
 
 const DisplaySlugRoute = DisplaySlugRouteImport.update({
-  id: '/display/$slug',
-  path: '/display/$slug',
+  id: "/display/$slug",
+  path: "/display/$slug",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/display/$slug': typeof DisplaySlugRoute
+  "/display/$slug": typeof DisplaySlugRoute;
 }
 export interface FileRoutesByTo {
-  '/display/$slug': typeof DisplaySlugRoute
+  "/display/$slug": typeof DisplaySlugRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/display/$slug': typeof DisplaySlugRoute
+  __root__: typeof rootRouteImport;
+  "/display/$slug": typeof DisplaySlugRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/display/$slug'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/display/$slug'
-  id: '__root__' | '/display/$slug'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "/display/$slug";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/display/$slug";
+  id: "__root__" | "/display/$slug";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  DisplaySlugRoute: typeof DisplaySlugRoute
+  DisplaySlugRoute: typeof DisplaySlugRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/display/$slug': {
-      id: '/display/$slug'
-      path: '/display/$slug'
-      fullPath: '/display/$slug'
-      preLoaderRoute: typeof DisplaySlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    "/display/$slug": {
+      id: "/display/$slug";
+      path: "/display/$slug";
+      fullPath: "/display/$slug";
+      preLoaderRoute: typeof DisplaySlugRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   DisplaySlugRoute: DisplaySlugRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
