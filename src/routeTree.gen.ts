@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DisplaySlugRouteImport } from './routes/display/$slug'
+import { Route as AdminCarGroupsIndexRouteImport } from './routes/admin/car-groups/index'
 import { Route as AdminBrandsIndexRouteImport } from './routes/admin/brands/index'
 
 const DisplaySlugRoute = DisplaySlugRouteImport.update({
   id: '/display/$slug',
   path: '/display/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCarGroupsIndexRoute = AdminCarGroupsIndexRouteImport.update({
+  id: '/admin/car-groups/',
+  path: '/admin/car-groups/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBrandsIndexRoute = AdminBrandsIndexRouteImport.update({
@@ -26,27 +32,31 @@ const AdminBrandsIndexRoute = AdminBrandsIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/display/$slug': typeof DisplaySlugRoute
   '/admin/brands/': typeof AdminBrandsIndexRoute
+  '/admin/car-groups/': typeof AdminCarGroupsIndexRoute
 }
 export interface FileRoutesByTo {
   '/display/$slug': typeof DisplaySlugRoute
   '/admin/brands': typeof AdminBrandsIndexRoute
+  '/admin/car-groups': typeof AdminCarGroupsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/display/$slug': typeof DisplaySlugRoute
   '/admin/brands/': typeof AdminBrandsIndexRoute
+  '/admin/car-groups/': typeof AdminCarGroupsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/display/$slug' | '/admin/brands/'
+  fullPaths: '/display/$slug' | '/admin/brands/' | '/admin/car-groups/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/display/$slug' | '/admin/brands'
-  id: '__root__' | '/display/$slug' | '/admin/brands/'
+  to: '/display/$slug' | '/admin/brands' | '/admin/car-groups'
+  id: '__root__' | '/display/$slug' | '/admin/brands/' | '/admin/car-groups/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   DisplaySlugRoute: typeof DisplaySlugRoute
   AdminBrandsIndexRoute: typeof AdminBrandsIndexRoute
+  AdminCarGroupsIndexRoute: typeof AdminCarGroupsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/display/$slug'
       fullPath: '/display/$slug'
       preLoaderRoute: typeof DisplaySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/car-groups/': {
+      id: '/admin/car-groups/'
+      path: '/admin/car-groups'
+      fullPath: '/admin/car-groups/'
+      preLoaderRoute: typeof AdminCarGroupsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/brands/': {
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   DisplaySlugRoute: DisplaySlugRoute,
   AdminBrandsIndexRoute: AdminBrandsIndexRoute,
+  AdminCarGroupsIndexRoute: AdminCarGroupsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
