@@ -41,49 +41,17 @@ export const Route = createFileRoute("/admin/car-groups/")({
   component: CarGroupsPage,
 });
 
-function CarGroupsPage() {
-  const { data: carGroups, isLoading } = useCarGroups();
-  const createCarGroup = useCreateCarGroup();
-  const updateCarGroup = useUpdateCarGroup();
-  const deleteCarGroup = useDeleteCarGroup();
+const emptyForm = { code: "", name: "", drivetrainType: "", sortOrder: 0 };
 
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editTarget, setEditTarget] = useState<CarGroup | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<CarGroup | null>(null);
+type FormValues = typeof emptyForm;
 
-  const emptyForm = { code: "", name: "", drivetrainType: "", sortOrder: 0 };
-  const [form, setForm] = useState(emptyForm);
+interface FormFieldsProps {
+  form: FormValues;
+  setForm: React.Dispatch<React.SetStateAction<FormValues>>;
+}
 
-  const handleCreate = () => {
-    createCarGroup.mutate(form, {
-      onSuccess: () => {
-        setCreateOpen(false);
-        setForm(emptyForm);
-      },
-    });
-  };
-
-  const handleEdit = () => {
-    if (!editTarget) return;
-    updateCarGroup.mutate(
-      { id: editTarget.id, data: form },
-      {
-        onSuccess: () => {
-          setEditTarget(null);
-          setForm(emptyForm);
-        },
-      }
-    );
-  };
-
-  const handleDelete = () => {
-    if (!deleteTarget) return;
-    deleteCarGroup.mutate(deleteTarget.id, {
-      onSuccess: () => setDeleteTarget(null),
-    });
-  };
-
-  const FormFields = () => (
+function FormFields({ form, setForm }: FormFieldsProps) {
+  return (
     <div className="grid gap-4 py-4">
       <div className="grid gap-2">
         <Label>Code</Label>
@@ -123,6 +91,47 @@ function CarGroupsPage() {
       </div>
     </div>
   );
+}
+
+function CarGroupsPage() {
+  const { data: carGroups, isLoading } = useCarGroups();
+  const createCarGroup = useCreateCarGroup();
+  const updateCarGroup = useUpdateCarGroup();
+  const deleteCarGroup = useDeleteCarGroup();
+
+  const [createOpen, setCreateOpen] = useState(false);
+  const [editTarget, setEditTarget] = useState<CarGroup | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<CarGroup | null>(null);
+  const [form, setForm] = useState<FormValues>(emptyForm);
+
+  const handleCreate = () => {
+    createCarGroup.mutate(form, {
+      onSuccess: () => {
+        setCreateOpen(false);
+        setForm(emptyForm);
+      },
+    });
+  };
+
+  const handleEdit = () => {
+    if (!editTarget) return;
+    updateCarGroup.mutate(
+      { id: editTarget.id, data: form },
+      {
+        onSuccess: () => {
+          setEditTarget(null);
+          setForm(emptyForm);
+        },
+      }
+    );
+  };
+
+  const handleDelete = () => {
+    if (!deleteTarget) return;
+    deleteCarGroup.mutate(deleteTarget.id, {
+      onSuccess: () => setDeleteTarget(null),
+    });
+  };
 
   return (
     <div className="p-8">
@@ -194,7 +203,7 @@ function CarGroupsPage() {
           <DialogHeader>
             <DialogTitle>Add car group</DialogTitle>
           </DialogHeader>
-          <FormFields />
+          <FormFields form={form} setForm={setForm} />
           <DialogFooter>
             <Button variant="outline" onClick={() => setCreateOpen(false)}>
               Cancel
@@ -212,7 +221,7 @@ function CarGroupsPage() {
           <DialogHeader>
             <DialogTitle>Edit car group</DialogTitle>
           </DialogHeader>
-          <FormFields />
+          <FormFields form={form} setForm={setForm} />
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditTarget(null)}>
               Cancel
